@@ -12,15 +12,19 @@ function App() {
     const saveReaction = localStorage.getItem(REACTION_KEY);
     if (saveReaction !== null) {
       return JSON.parse(saveReaction);
-    } else {
-      return {
-        good: 0,
-        neutral: 0,
-        bad: 0,
-      };
     }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
   });
-  const [isReaction, setIsReaction] = useState(false);
+  const [isReaction, setIsReaction] = useState(() => {
+    if (reaction.good + reaction.neutral + reaction.bad > 0) {
+      return true;
+    }
+    return false;
+  });
 
   useEffect(() => {
     localStorage.setItem(REACTION_KEY, JSON.stringify(reaction));
