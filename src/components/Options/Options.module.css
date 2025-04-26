@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.btnList {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  min-width: 90px;
+  height: 32px;
+  padding: 6px;
+  background-color: rgb(63, 114, 116);
+  border-radius: 16px;
+  border: none;
+  color: #fafafa;
+  text-align: center;
+}

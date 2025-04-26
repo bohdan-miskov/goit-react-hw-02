@@ -1,13 +1,16 @@
+import css from "./Options.module.css";
+
 export default function Options({
   updateReaction,
-  isReaction,
-  updateIsReaction,
+  totalFeedback,
+  resetReactions,
 }) {
   return (
-    <div>
-      <ul>
+    <div className={css.container}>
+      <ul className={css.btnList}>
         <li>
           <button
+            className={css.btn}
             onClick={() => {
               updateReaction("good");
             }}
@@ -17,6 +20,7 @@ export default function Options({
         </li>
         <li>
           <button
+            className={css.btn}
             onClick={() => {
               updateReaction("neutral");
             }}
@@ -26,6 +30,7 @@ export default function Options({
         </li>
         <li>
           <button
+            className={css.btn}
             onClick={() => {
               updateReaction("bad");
             }}
@@ -34,12 +39,8 @@ export default function Options({
           </button>
         </li>
       </ul>
-      {isReaction && (
-        <button
-          onClick={() => {
-            updateIsReaction(false);
-          }}
-        >
+      {Boolean(totalFeedback) && (
+        <button className={css.btn} onClick={resetReactions}>
           Reset
         </button>
       )}

@@ -4,6 +4,7 @@ import "./App.css";
 import Description from "../Description/Description";
 import Options from "../Options/Options";
 import Feedback from "../Feedback/Feedback";
+import Notification from "../Notification/Notification";
 
 const REACTION_KEY = "reaction";
 
@@ -19,22 +20,15 @@ function App() {
       bad: 0,
     };
   });
-  const [isReaction, setIsReaction] = useState(() => {
-    if (reaction.good + reaction.neutral + reaction.bad > 0) {
-      return true;
-    }
-    return false;
-  });
+
+  const totalFeedback = reaction.good + reaction.neutral + reaction.bad;
+  const positiveFeedback = Math.round(
+    ((reaction.good + reaction.neutral) / totalFeedback) * 100
+  );
 
   useEffect(() => {
     localStorage.setItem(REACTION_KEY, JSON.stringify(reaction));
   }, [reaction]);
-
-  useEffect(() => {
-    if (!isReaction) {
-      resetReactions();
-    }
-  }, [isReaction]);
 
   function resetReactions() {
     setReaction({
@@ -49,11 +43,6 @@ function App() {
       ...reaction,
       [key]: reaction[key] + 1,
     });
-    updateisReaction(true);
-  }
-
-  function updateisReaction(status) {
-    setIsReaction(status);
   }
 
   return (
@@ -61,10 +50,17 @@ function App() {
       <Description />
       <Options
         updateReaction={updateReaction}
-        isReaction={isReaction}
-        updateIsReaction={updateisReaction}
+        totalFeedback={totalFeedback}
+        resetReactions={resetReactions}
       />
-      {isReaction ? <Feedback reaction={reaction} /> : <p>No feedback yet</p>}
+      {Boolean(totalFeedback) && (
+        <Feedback
+          reaction={reaction}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
+      )}
+      {Boolean(!totalFeedback) && <Notification />}
     </div>
   );
 }

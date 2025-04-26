@@ -1,14 +1,17 @@
-export default function Feedback({ reaction }) {
-  let total = reaction.good + reaction.neutral + reaction.bad;
-  let positive = Math.round(((reaction.good + reaction.neutral) / total) * 100);
+import css from "./Feedback.module.css";
 
+export default function Feedback({
+  reaction,
+  totalFeedback,
+  positiveFeedback,
+}) {
   return (
-    <ul>
-      <li>Good:{reaction.good}</li>
-      <li>Neutral:{reaction.neutral}</li>
-      <li>Bad:{reaction.bad}</li>
-      <li>Total:{total}</li>
-      <li>Positive:{positive}%</li>
+    <ul className={css.container}>
+      <li className={css.item}>Good:{reaction.good}</li>
+      <li className={css.item}>Neutral:{reaction.neutral}</li>
+      <li className={css.item}>Bad:{reaction.bad}</li>
+      <li className={css.item}>Total:{totalFeedback}</li>
+      <li className={css.item}>Positive:{positiveFeedback}%</li>
     </ul>
   );
 }
